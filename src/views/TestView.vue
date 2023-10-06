@@ -7,7 +7,7 @@
       </div>
       <div class="ui main container">
 
-       <Students />
+       <StudentList />
 
 
       </div>
@@ -16,11 +16,11 @@
   
   <script>
 
- import Students from '@/components/Students.vue';
+ import StudentList from '@/components/StudentList.vue';
   export default {
     name:"App",
     components: {
-      Students
+      StudentList
     }
   };
   </script>
