@@ -1,7 +1,12 @@
 <template>
   <nav>
     <router-link to="/">Home</router-link> |
+<<<<<<< HEAD
     <router-link to="/InfoCategory">Categorias</router-link> | 
+=======
+    <router-link to="/dashboard">Dashboard</router-link> |
+    <router-link to="/about">About</router-link> | 
+>>>>>>> af2a9fd7f72dae4628219ab17650938cff0b9be1
     <router-link to="/testeo">Testeo</router-link>
   </nav>
   <router-view/>
