@@ -19,16 +19,21 @@
         </tbody>
       </table>
     </div>
+    <AbmCategoryView/>
   </div>
 </template>
 
 <script>
+import AbmCategoryView from "./AbmCategoryView.vue"
 import axios from "axios";
 export default {
   data() {
     return {
       categorias: [],
     };
+  },
+  components: {
+    AbmCategoryView
   },
   mounted() {
     axios
@@ -43,7 +48,8 @@ export default {
         console.log(error);
       });
   },
-  methods: {},
+  methods: {
+  },
 };
 </script>
 
