@@ -16,8 +16,8 @@
           <tr v-for="categoria in categorias" :key="categoria.id">
             <td>{{ categoria.id }}</td>
             <td>{{ categoria.name }}</td>
-            <td>  <input type="submit"  value="editar"> 
-              <input type="submit" value="borrar"> 
+            <td>  <input type="submit" value="editar" @click="modificar()"> 
+              <input type="submit" value="borrar" @click="eliminar()"> 
               <input type="submit" value="consultar"> 
               </td>
           </tr>
@@ -60,7 +60,38 @@ export default {
       });
   },
   methods: {
-    
+        modificar() {
+          var url = "http://localhost/danzar_api/public/categories/${categoria.id}"
+          var msg = {name: this.name}
+          console.log(url, msg)
+            axios
+            .put(url, msg)
+            .then((response) => {
+            // Mostramos los datos obtenidos en la consola
+            console.log(response);
+            this.categorias = response.data;
+            })
+            .catch(function (error) {
+            // Si hubo algun error mostramos algo
+            console.log(error);
+            });
+        },
+        eliminar() {
+          var url = "http://localhost/danzar_api/public/categories/"
+          var msg = {name: this.name}
+          console.log(url, msg)
+            axios
+            .delete(url, msg)
+            .then((response) => {
+            // Mostramos los datos obtenidos en la consola
+            console.log(response);
+            this.categorias = response.data;
+            })
+            .catch(function (error) {
+            // Si hubo algun error mostramos algo
+            console.log(error);
+            });
+        }
   },
 };
 </script>
