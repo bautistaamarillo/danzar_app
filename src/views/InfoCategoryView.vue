@@ -1,5 +1,4 @@
 <template>
-  <div>
     <h1>Prueba, muestro categorias.</h1>
     <br />
 
@@ -12,28 +11,40 @@
           </tr>
         </thead>
         <tbody>
+         
+          
           <tr v-for="categoria in categorias" :key="categoria.id">
             <td>{{ categoria.id }}</td>
             <td>{{ categoria.name }}</td>
+            <td>  <input type="submit"  value="editar"> 
+              <input type="submit" value="borrar"> 
+              <input type="submit" value="consultar"> 
+              </td>
           </tr>
         </tbody>
       </table>
     </div>
+    Añadir Nuevo:<input v-model="check" type="checkbox"> 
+     <div v-if="check === true">
     <AbmCategoryView/>
-  </div>
-</template>
+     </div>
+      </template>
+
 
 <script>
 import AbmCategoryView from "./AbmCategoryView.vue"
 import axios from "axios";
 export default {
   data() {
+    
     return {
+      check: false,
       categorias: [],
     };
   },
   components: {
     AbmCategoryView
+    
   },
   mounted() {
     axios
@@ -49,6 +60,7 @@ export default {
       });
   },
   methods: {
+    
   },
 };
 </script>
