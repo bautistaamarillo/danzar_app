@@ -33,7 +33,7 @@ export default {
   mixins: [FuncionesUtilidades],
 
   mounted() {
-    this.getData("students");
+    this.getData("students",2);
   },
   methods: {},
 };
