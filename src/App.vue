@@ -2,7 +2,7 @@
   <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/InfoCategory">Categorias</router-link> | 
-    <router-link to="/testeo">Testeo</router-link>
+    <router-link to="/estudiantes">Estudiantes</router-link>
   </nav>
   <router-view/>
 </template>

@@ -12,6 +12,7 @@
   <tr v-for="student in students" :key="student.id">
     <td>{{ student.id }}</td>
     <td>{{ student.name }}</td>
+    <td>{{ student. }}</td>
   </tr>
 </template>
   
