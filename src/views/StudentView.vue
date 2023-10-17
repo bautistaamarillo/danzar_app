@@ -9,9 +9,12 @@
     <StudentList />
   </div>
   <!-- </div> -->
-  <tr v-for="student in students" :key="student.id">
+  <tr v-for="student in resultados" :key="student.id">
+    
     <td>{{ student.id }}</td>
     <td>{{ student.name }}</td>
+    <td>{{ student.last_name }}</td>
+    
   </tr>
 </template>
   
@@ -24,7 +27,7 @@ export default {
   name: "App",
   data() {
     return {
-      students: [],
+      resultados: [],
     };
   },
   components: {
@@ -33,7 +36,7 @@ export default {
   mixins: [FuncionesUtilidades],
 
   mounted() {
-    this.getData("students",2);
+    this.getData("students");
   },
   methods: {},
 };

@@ -17,7 +17,7 @@ export default {
       .then((response) => {
         // Mostramos los datos obtenidos en la consola
         console.log(response)
-        this.students = response.data
+        this.resultados = response.data
       })
       .catch(function (error) {
         // Si hubo algun error mostramos algo

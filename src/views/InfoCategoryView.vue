@@ -50,12 +50,12 @@ export default {
     axios
       .get("http://localhost/danzar_api/public/categories")
       .then((response) => {
-        // Mostramos los datos obtenidos en la consola
+        
         console.log(response);
         this.categorias = response.data;
       })
       .catch(function (error) {
-        // Si hubo algun error mostramos algo
+      
         console.log(error);
       });
   },
@@ -67,7 +67,7 @@ export default {
             axios
             .put(url, msg)
             .then((response) => {
-            // Mostramos los datos obtenidos en la consola
+          
             console.log(response);
             this.categorias = response.data;
             })

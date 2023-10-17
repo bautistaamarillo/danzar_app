@@ -1,8 +1,16 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-
+import PageNotFound from '../components/PageNotFound.vue'
 
 const routes = [
+  {
+    path: "/:catchAll(.*)",
+    name: "NotFound",
+    component: PageNotFound,
+    meta: {
+      requiresAuth: false
+    }
+  },
   {
     path: '/',
     name: 'home',
@@ -17,15 +25,15 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/InfoCategoryView.vue')
   },
   {
-    path: '/testeo',
-    name: 'testeo',
+    path: '/estudiantes',
+    name: 'estudiantes',
     
-    component: () => import(/* webpackChunkName: "testeo" */ '../views/TestView.vue')
+    component: () => import(/* webpackChunkName: "testeo" */ '../views/StudentView.vue')
   }
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes
 })
 
