@@ -3,7 +3,7 @@
       <h1>Operar Categorias</h1>
       <form>
         Nombre
-        <input type="text" v-model="name"> <br>
+        <input type="text" v-model="registro.name"> <br>
         <input type="submit" value="nuevo" @click="crear()">
       </form>
     </div>
@@ -12,19 +12,29 @@
   <script>
  
  import axios from "axios";
+ import FuncionesUtilidades from "@/components/FuncionesUtilidades.vue";
   export default {
     components: {
 
     },
     data() {
         return {
-        name: "",
+        registro: {
+          name: ""
+        },
         };
     },
+
+    mixins: [FuncionesUtilidades],
+
+mounted() {
+  this.getData("categories",1);
+},
+
     methods: {
       crear() {
         var url = "http://localhost/danzar_api/public/categories"
-        var msg = {name: this.name}
+        var msg = this.registro
         console.log(url, msg)
           axios
           .post(url, msg)
@@ -38,6 +48,10 @@
           console.log(error);
           });
       },
+      editar() {
+        axios
+        .put
+      }
     }
   };
   </script>

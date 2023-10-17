@@ -2,18 +2,16 @@
 
 <script>
 
+const url = "http://localhost/danzar_api/public/";
 import axios from "axios"
 export default {
   name: 'FuncionesUtilidades',
   methods: {
     async getData(endpoint,idbusqueda) {
-
         if (idbusqueda == undefined) {
             idbusqueda = ""
         }
-        var url = "http://localhost/danzar_api/public/"
         console.log(url+endpoint+"/"+idbusqueda)
-    
     axios
       .get(url+endpoint+"/"+idbusqueda)
       .then((response) => {
@@ -26,6 +24,34 @@ export default {
         console.log(error)
       })
     },
+
+
+    async editData(endpoint,idedit){
+      axios
+      .put(url+endpoint+"/"+idedit)
+      .then((response) => {
+        console.log(response)
+        this.resultados = response.data
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+    },
+
+    // async destroyData(endpoint,idedit){
+    //   axios
+    //   .delete(url+endpoint+"/"+idedit)
+    //   .then((response) => {
+    //     console.log("se ha eliminado correctamente.")
+    //     this.resultados = response.data //me falta borrar los datos
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error)
+    //   })
+    // },
+    
+
+
   },
   
 }
