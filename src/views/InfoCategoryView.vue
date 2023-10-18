@@ -77,20 +77,21 @@ export default {
             });
         },
         eliminar() {
-          var url = "http://localhost/danzar_api/public/categories/"
-          var msg = {name: this.name}
-          console.log(url, msg)
-            axios
-            .delete(url, msg)
-            .then((response) => {
-            // Mostramos los datos obtenidos en la consola
-            console.log(response);
-            this.categorias = response.data;
-            })
-            .catch(function (error) {
-            // Si hubo algun error mostramos algo
-            console.log(error);
-            });
+          console.log("hola");
+          // var url = "http://localhost/danzar_api/public/categories/"
+          // var msg = {name: this.name}
+          // console.log(url, msg)
+          //   axios
+          //   .delete(url, msg)
+          //   .then((response) => {
+          //   // Mostramos los datos obtenidos en la consola
+          //   console.log(response);
+          //   this.categorias = response.data;
+          //   })
+          //   .catch(function (error) {
+          //   // Si hubo algun error mostramos algo
+          //   console.log(error);
+          //   });
         }
   },
 };

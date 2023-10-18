@@ -82,24 +82,8 @@ export default {
             });
         },
         eliminar() {
-          var url = "http://localhost/danzar_api/public/items/"
-          var msg = {
-            name: this.name,
-            amount: this.amount,
-            category_id: this.category_id
-          }
-          console.log(url, msg)
-            axios
-            .delete(url, msg)
-            .then((response) => {
-            // Mostramos los datos obtenidos en la consola
-            console.log(response);
-            this.items = response.data;
-            })
-            .catch(function (error) {
-            // Si hubo algun error mostramos algo
-            console.log(error);
-            });
+          console.log("Hasta aca llega la supuesta eliminacion ")
+          //
         }
   },
 };
