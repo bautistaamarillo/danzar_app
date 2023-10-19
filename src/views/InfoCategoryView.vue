@@ -1,7 +1,11 @@
 <template>
     <h1>Prueba, muestro categorias.</h1>
     <br />
-
+    <div class="card">
+  <div class="card-body">
+    Estos son las categorias.
+  </div>
+</div>
     <div class="div_tabla_categorias">
       <table class="tabla_categorias">
         <thead>
