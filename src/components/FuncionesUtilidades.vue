@@ -27,15 +27,18 @@ export default {
 
 
     async editData(endpoint,idedit){
+      
       axios
       .put(url+endpoint+"/"+idedit)
       .then((response) => {
         console.log(response)
         this.resultados = response.data
+        
       })
       .catch(function (error) {
         console.log(error)
       })
+   
     },
 
     // async destroyData(endpoint,idedit){

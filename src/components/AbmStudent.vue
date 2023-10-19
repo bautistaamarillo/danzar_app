@@ -52,6 +52,7 @@ mounted() {
        
         console.log(error);
         });
+      
     },
     
   }
