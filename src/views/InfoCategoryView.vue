@@ -1,33 +1,31 @@
 <template>
-    <h1>Prueba, muestro categorias.</h1>
-    <br />
     <div class="card">
   <div class="card-body">
-    Estos son las categorias.
+    <h1> Estas son las categorias. </h1>
   </div>
 </div>
-    <div class="div_tabla_categorias">
-      <table class="tabla_categorias">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>NOMBRE</th>
-          </tr>
-        </thead>
-        <tbody>
-         
-          
-          <tr v-for="categoria in categorias" :key="categoria.id">
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr v-for="categoria in categorias" :key="categoria.id">
             <td>{{ categoria.id }}</td>
             <td>{{ categoria.name }}</td>
-            <td>  <input type="submit" value="editar" @click="modificar()"> 
-              <input type="submit" value="borrar" @click="eliminar()"> 
-              <input type="submit" value="consultar"> 
+            <td>  <button type="button" class="btn btn-outline-warning" @click="editar()">Editar</button>
+              <button type="button" class="btn btn-outline-danger" @click="eliminar()">  Eliminar </button>
+              <button type="button" class="btn btn-outline-info" @click="consultar()">Info</button>
               </td>
           </tr>
-        </tbody>
-      </table>
-    </div>
+          
+  </tbody>
+</table>
+
     Añadir Nuevo:<input v-model="check" type="checkbox"> 
      <div v-if="check === true">
     <AbmCategoryView/>
@@ -102,13 +100,5 @@ export default {
 </script>
 
 <style>
-.div_tabla_categorias {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-.tabla_categorias {
-  background-color: #caecae;
-}
 </style>
