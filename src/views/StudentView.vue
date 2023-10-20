@@ -40,11 +40,11 @@ export default {
 
   mounted() {
     this.getData("students");
-    this.editData("students"+student.id);
+    // this.editData("students"+student.id); //"student" no esta definido.
     
   },
   methods: {},
-  const editar = (student.id) => ;
+  // const editar = (student.id) => ; //incompleto
 };
 </script>
 <style>
