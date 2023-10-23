@@ -42,6 +42,11 @@ const routes = [
     component: () => import('../components/AddItem.vue')
   },
   {
+    path: "/Items/:id",
+    name: "Item-view-details",
+    component: () => import("../components/ItemView.vue")
+  },
+  {
     path: '/ItemsList',
     name: 'ItemsList',
     component: () => import('../components/ItemsList.vue')

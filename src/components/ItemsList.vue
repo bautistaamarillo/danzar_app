@@ -40,7 +40,9 @@
             <label><strong>Category_id:</strong></label> {{ currentItem.category_id }}
           </div>
   
-          <router-link :to="'/items/' + currentItem.id" class="badge badge-warning">Edit</router-link>
+          <button>
+            <router-link :to="'/items/' + currentItem.id" class="badge badge-warning">Edit</router-link>
+          </button>
         </div>
         <div v-else>
           <br />
