@@ -36,17 +36,14 @@ mounted() {
   methods: {
     crear() {
       var url = "http://localhost/danzar_api/public/students"
-      var msg = {
-          name: this.name,
-          last_name: this.last_name
-      }
+      var msg = this.registro;
       console.log(url, msg)
         axios
         .post(url, msg)
         .then((response) => {
       
         console.log(response);
-        this.students = response.data;
+        this.resultados = response.data;
         })
         .catch(function (error) {
        
