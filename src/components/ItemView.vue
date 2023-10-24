@@ -39,15 +39,17 @@
   
     <div v-else>
       <br />
-      <p>Please click on a Tutorial...</p>
+      <p>Please click on an Item...</p>
     </div>
   </template>
   
   <script>
   import ItemDataService from "../services/ItemDataService";
+  import axios from "axios"
   
   export default {
     name: "ItemView",
+    props: ["ItemId"],
     data() {
       return {
         currentItem: null,
@@ -91,6 +93,15 @@
     mounted() {
       this.message = '';
       this.getItem(this.$route.params.id);
+      axios
+        .get('http://localhost/danzar_api/public/items/' + this.ItemId)
+          .then((response) => {
+            console.log(response);
+            this.currentItem = response.data[0];
+          })
+          .catch(function (error) {
+          console.log(error);
+          });
     }
   };
   </script>

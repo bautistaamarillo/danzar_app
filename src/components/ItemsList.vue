@@ -12,6 +12,10 @@
             </button>
           </div>
         </div>
+          <button class="btn btn-outline-secondary" @click = "add_item = !add_item">Nuevo</button>
+          <div v-if="add_item === true">
+            <AddItem/>
+          </div>
       </div>
       <div class="col-md-6">
         <h4>Items List</h4>
@@ -40,9 +44,14 @@
             <label><strong>Category_id:</strong></label> {{ currentItem.category_id }}
           </div>
   
-          <button>
-            <router-link :to="'/items/' + currentItem.id" class="badge badge-warning">Edit</router-link>
+          <button class="btn btn-outline-secondary" @click = "item_view = !item_view">
+            Edit
           </button>
+          <div v-if="item_view === true">
+            <ItemView
+              :ItemId = currentItem.id
+            />
+          </div>
         </div>
         <div v-else>
           <br />
@@ -54,6 +63,8 @@
   
   <script>
   import ItemDataService from "../services/ItemDataService";
+  import AddItem from "./AddItem.vue"
+  import ItemView from "./ItemView.vue"
   
   export default {
     name: "items-list",
@@ -62,9 +73,15 @@
         items: [],
         currentItem: null,
         currentIndex: -1,
-        name: ""
+        name: "",
+        add_item: false,
+        item_view: false,
       };
     },
+    components: {
+    AddItem,
+    ItemView
+  },
     methods: {
       retrieveItems() {
         ItemDataService.getAll()
