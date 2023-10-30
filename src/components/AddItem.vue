@@ -14,7 +14,7 @@
         </div>
   
         <div class="form-group">
-          <label for="amount">Monto</label>
+          <label for="amount">Precio</label>
           <input
             class="form-control"
             id="amount"
@@ -25,7 +25,7 @@
         </div>
 
         <div class="form-group">
-          <label for="category_id">Categoria</label>
+          <label for="category_id">ID de Categoria</label>
           <input
             class="form-control"
             id="category_id"
@@ -35,12 +35,12 @@
           />
         </div>
   
-        <button @click="saveItem" class="btn btn-success">Submit</button>
+        <button @click="saveItem" class="btn btn-success">Guardar</button>
       </div>
   
       <div v-else>
-        <h4>You submitted successfully!</h4>
-        <button class="btn btn-success" @click="newItem">Add</button>
+        <h4>Item guardado con exito!</h4>
+        <button class="btn btn-success" @click="newItem">Nuevo</button>
       </div>
     </div>
   </template>

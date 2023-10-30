@@ -18,9 +18,6 @@
           <router-link class="nav-link" to="/estudiantes">Estudiantes</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/ItemAdd">Nuevo Item</router-link>
-        </li>
-        <li class="nav-item">
           <router-link class="nav-link" to="/ItemsList">Items</router-link>
         </li>
 

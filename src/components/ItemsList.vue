@@ -2,27 +2,27 @@
     <div class="list row">
       <div class="col-md-8">
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Search by name"
+          <input type="text" class="form-control" placeholder="Busqueda por nombre"
             v-model="name"/>
           <div class="input-group-append">
             <button class="btn btn-outline-secondary" type="button"
               @click="searchName"
             >
-              Search
+              Buscar
             </button>
           </div>
         </div>
-          <button class="btn btn-outline-secondary" @click = "add_item = !add_item">Nuevo</button>
+          <button class="btn btn-primary" @click = "add_item = !add_item">Añadir</button>
           <div v-if="add_item === true">
             <AddItem/>
           </div>
       </div>
       <div class="col-md-6">
-        <h4>Items List</h4>
+        <h4>Listado de items</h4>
         <ul class="list-group">
           <li class="list-group-item"
             :class="{ active: index == currentIndex }"
-            v-for="(item, index) in items"
+            v-for="(item, index) in filteredItems"
             :key="index"
             @click="setActiveItem(item, index)"
           >
@@ -35,17 +35,17 @@
         <div v-if="currentItem">
           <h4>Item</h4>
           <div>
-            <label><strong>Name:</strong></label> {{ currentItem.name }}
+            <label><strong>Nombre:</strong></label> {{ currentItem.name }}
           </div>
           <div>
-            <label><strong>Amount:</strong></label> {{ currentItem.amount }}
+            <label><strong>Precio:</strong></label> {{ currentItem.amount }}
           </div>
           <div>
-            <label><strong>Category_id:</strong></label> {{ currentItem.category_id }}
+            <label><strong>ID de categoria:</strong></label> {{ currentItem.category_id }}
           </div>
   
-          <button class="btn btn-outline-secondary" @click = "item_view = !item_view">
-            Edit
+          <button class="btn btn-outline-warning" @click = "item_view = !item_view">
+            Editar
           </button>
           <div v-if="item_view === true">
             <ItemView
@@ -55,7 +55,7 @@
         </div>
         <div v-else>
           <br />
-          <p>Please click on an Item...</p>
+          <p>Por favor seleccione un Item...</p>
         </div>
       </div>
     </div>
@@ -74,6 +74,7 @@
         currentItem: null,
         currentIndex: -1,
         name: "",
+        filteredItems: [],
         add_item: false,
         item_view: false,
       };
@@ -86,7 +87,8 @@
       retrieveItems() {
         ItemDataService.getAll()
           .then(response => {
-            this.Items = response.data;
+            this.items = response.data;
+            this.searchName();
             console.log(response.data);
           })
           .catch(e => {
@@ -106,15 +108,8 @@
       },
       
       searchName() {
-        ItemDataService.findByName(this.name)
-          .then(response => {
-            this.items = response.data;
-            this.setActiveItem(null);
-            console.log(response.data);
-          })
-          .catch(e => {
-            console.log(e);
-          });
+        this.filteredItems = this.items.filter((item) => item.name.includes(this.name))
+        this.setActiveItem(null);
       }
     },
     mounted() {

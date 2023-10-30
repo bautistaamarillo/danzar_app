@@ -21,9 +21,9 @@ class ItemDataService {
     return http.delete(`/items/${id}`);
   }
 
-  findByName(name) {
-    return http.get(`/items?name=${name}`);
-  }
+  // findByName(name) {
+  //   return http.get(`/items?name=${name}`);
+  // }
 }
 
 export default new ItemDataService();

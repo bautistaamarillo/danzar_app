@@ -3,19 +3,19 @@
       <h4>Item</h4>
       <form>
         <div class="form-group">
-          <label for="name">Name</label>
+          <label for="name">Nombre</label>
           <input type="text" class="form-control" id="name"
             v-model="currentItem.name"
           />
         </div>
         <div class="form-group">
-          <label for="amount">Amount</label>
+          <label for="amount">Precio</label>
           <input type="number" class="form-control" id="amount"
             v-model="currentItem.amount"
           />
         </div>
         <div class="form-group">
-          <label for="category_id">Category_id</label>
+          <label for="category_id">ID de categoria</label>
           <input type="number" class="form-control" id="category_id"
             v-model="currentItem.category_id"
           />
@@ -23,23 +23,23 @@
   
       </form>
   
-      <button class="badge badge-danger mr-2"
+      <button class="btn btn-outline-danger"
         @click="deleteItem"
       >
-        Delete
+        Eliminar
       </button>
   
-      <button type="submit" class="badge badge-success"
+      <button type="submit" class="btn btn-outline-secondary"
         @click="updateItem"
       >
-        Update
+        Actualizar
       </button>
       <p>{{ message }}</p>
     </div>
   
     <div v-else>
       <br />
-      <p>Please click on an Item...</p>
+      <p>Por favor seleccione un Item...</p>
     </div>
   </template>
   
