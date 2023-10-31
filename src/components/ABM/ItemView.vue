@@ -44,7 +44,7 @@
   </template>
   
   <script>
-  import ItemDataService from "../services/ItemDataService";
+  import ItemDataService from "@/services/ItemDataService";
   import axios from "axios"
   
   export default {

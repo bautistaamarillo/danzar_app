@@ -1,16 +1,12 @@
 <template>
   <div>
-    <h1>Prueba, pasaje de datos.</h1>
-    <IngresarDatos />
+    Inserte vista de home re fachera
   </div>
 </template>
 
 <script>
-import IngresarDatos from '@/components/IngresarDatos.vue';
-
 export default {
   components: {
-    IngresarDatos,
   },
 };
 </script>

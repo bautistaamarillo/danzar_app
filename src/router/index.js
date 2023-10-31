@@ -31,15 +31,9 @@ const routes = [
     component: () => import(/* webpackChunkName: "testeo" */ '../views/StudentView.vue')
   },
   {
-    path: '/InfoItem',
-    name: 'InfoItem',
-
+    path: '/InfoItemView',
+    name: 'InfoItemView',
     component: () => import('../views/InfoItemView.vue')
-  },
-  {
-    path: '/ItemsList',
-    name: 'ItemsList',
-    component: () => import('../components/ItemsList.vue')
   }
 ]
 

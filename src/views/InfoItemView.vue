@@ -1,102 +1,127 @@
 <template>
+    <div class="list row">
+      <div class="col-md-8">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Busqueda por nombre"
+            v-model="name"/>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button"
+              @click="searchName"
+            >
+              Buscar
+            </button>
+          </div>
+        </div>
+          <button class="btn btn-primary" @click = "add_item = !add_item">Añadir</button>
+          <div v-if="add_item === true">
+            <AddItem/>
+          </div>
+      </div>
+      <div class="col-md-6">
+        <h4>Listado de items</h4>
+        <ul class="list-group">
+          <li class="list-group-item"
+            :class="{ active: index == currentIndex }"
+            v-for="(item, index) in filteredItems"
+            :key="index"
+            @click="setActiveItem(item, index)"
+          >
+            {{ item.name }}
+          </li>
+        </ul>
 
-    <div class="div_tabla_categorias">
-      <table class="tabla_categorias">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>NOMBRE</th>
-            <th>MONTO</th>
-            <th>CATEGORIA</th>
-          </tr>
-        </thead>
-        <tbody>         
-          
-          <tr v-for="item in items" :key="item.id">
-            <td>{{ item.id }}</td>
-            <td>{{ item.name }}</td>
-            <td>{{ item.amount }}</td>
-            <td>{{ item.category_id }}</td>
-            <td>  <input type="submit" value="editar" @click="modificar()"> 
-              <input type="submit" value="borrar" @click="eliminar()"> 
-              <input type="submit" value="consultar"> 
-              </td>
-          </tr>
-        </tbody>
-      </table>
+      </div>
+      <div class="col-md-6">
+        <div v-if="currentItem">
+          <h4>Item</h4>
+          <div>
+            <label><strong>Nombre:</strong></label> {{ currentItem.name }}
+          </div>
+          <div>
+            <label><strong>Precio:</strong></label> {{ currentItem.amount }}
+          </div>
+          <div>
+            <label><strong>ID de categoria:</strong></label> {{ currentItem.category_id }}
+          </div>
+  
+          <button class="btn btn-outline-warning" @click = "item_view = !item_view">
+            Editar
+          </button>
+          <div v-if="item_view === true">
+            <ItemView
+              :ItemId = currentItem.id
+            />
+          </div>
+        </div>
+        <div v-else>
+          <br />
+          <p>Por favor seleccione un Item...</p>
+        </div>
+      </div>
     </div>
-    Añadir Nuevo:<input v-model="check" type="checkbox"> 
-     <div v-if="check === true">
-    <AbmItemView/>
-     </div>
-</template>
-
-
-<script>
-import AbmItemView from "./AbmItemView.vue"
-import axios from "axios";
-export default {
-  data() {
-    
-    return {
-      check: false,
-      items: [],
-    };
+  </template>
+  
+  <script>
+  import ItemDataService from "@/services/ItemDataService";
+  import AddItem from "@/components/ABM/AddItem.vue"
+  import ItemView from "@/components/ABM/ItemView.vue"
+  
+  export default {
+    name: "items-list",
+    data() {
+      return {
+        items: [],
+        currentItem: null,
+        currentIndex: -1,
+        name: "",
+        filteredItems: [],
+        add_item: false,
+        item_view: false,
+      };
+    },
+    components: {
+    AddItem,
+    ItemView
   },
-  components: {
-    AbmItemView
-    
-  },
-  mounted() {
-    axios
-      .get("http://localhost/danzar_api/public/items")
-      .then((response) => {
-        
-        console.log(response);
-        this.items = response.data;
-      })
-      .catch(function (error) {
-      
-        console.log(error);
-      });
-  },
-  methods: {
-        modificar() {
-          var url = "http://localhost/danzar_api/public/items/${item.id}"
-          var msg = {
-            name: this.name,
-            amount: this.amount,
-            category_id: this.category_id
-          }
-          console.log(url, msg)
-            axios
-            .put(url, msg)
-            .then((response) => {
-          
-            console.log(response);
+    methods: {
+      retrieveItems() {
+        ItemDataService.getAll()
+          .then(response => {
             this.items = response.data;
-            })
-            .catch(function (error) {
-            // Si hubo algun error mostramos algo
-            console.log(error);
-            });
-        },
-        eliminar() {
-          console.log("Hasta aca llega la supuesta eliminacion ")
-          //
-        }
-  },
-};
-</script>
-
-<style>
-.div_tabla_categorias {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.tabla_categorias {
-  background-color: #caecae;
-}
-</style>
+            this.searchName();
+            console.log(response.data);
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      },
+  
+      refreshList() {
+        this.retrieveItems();
+        this.currentItem = null;
+        this.currentIndex = -1;
+      },
+  
+      setActiveItem(item, index) {
+        this.currentItem = item;
+        this.currentIndex = item ? index : -1;
+      },
+      
+      searchName() {
+        this.filteredItems = this.items.filter((item) => item.name.includes(this.name))
+        this.setActiveItem(null);
+      }
+    },
+    mounted() {
+      this.retrieveItems();
+    }
+  };
+  </script>
+  
+  <style>
+  .list {
+    text-align: left;
+    max-width: 750px;
+    margin: auto;
+  }
+  </style>

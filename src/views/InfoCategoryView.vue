@@ -93,7 +93,7 @@
 
 
 <script>
-import AbmCategoryView from "./AbmCategoryView.vue";
+import AbmCategoryView from "@/components/ABM/AbmCategoryView.vue";
 import axios from "axios";
 export default {
   data() {

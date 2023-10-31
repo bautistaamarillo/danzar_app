@@ -101,7 +101,7 @@
   
 </template>
 <script>
-import AbmStudent from "@/components/AbmStudent.vue";
+import AbmStudent from "@/components/ABM/AbmStudent.vue";
 import FuncionesUtilidades from "@/components/FuncionesUtilidades.vue";
 import axios from "axios";
 export default {

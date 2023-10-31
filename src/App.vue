@@ -18,7 +18,7 @@
           <router-link class="nav-link" to="/estudiantes">Estudiantes</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/ItemsList">Items</router-link>
+          <router-link class="nav-link" to="/InfoItemView">Items</router-link>
         </li>
 
         <!-- <li class="nav-item dropdown">
