@@ -49,7 +49,8 @@
   import ItemDataService from "@/services/ItemDataService";
   
   export default {
-    name: "add-item",
+    name: "AbmItemView",
+    props: ['action', 'ItemId'],
     data() {
       return {
         item: {
@@ -62,18 +63,56 @@
       };
     },
     methods: {
-      saveItem() {
-        var data = {
-          name: this.item.name,
-          amount: this.item.amount,
-          category_id: this.item.category_id
-        };
-  
-        ItemDataService.create(data)
+      getItem(id) {
+        ItemDataService.get(id)
           .then(response => {
-            this.item.id = response.data.id;
+            this.item = response.data[0];
             console.log(response.data);
-            this.submitted = true;
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      },
+
+      saveItem() {
+        if (this.action = 'create') {
+          var data = {
+            name: this.item.name,
+            amount: this.item.amount,
+            category_id: this.item.category_id
+          };
+  
+          ItemDataService.create(data)
+            .then(response => {
+              this.item.id = response.data.id;
+              console.log(response.data);
+              this.submitted = true;
+            })
+            .catch(e => {
+              console.log(e);
+            });
+        }
+        else {
+          this.updateItem()
+        }
+      },
+
+      deleteItem() {
+        ItemDataService.delete(this.currentItem.id)
+          .then(response => {
+            console.log(response.data);
+            this.$router.push({ name: "items" });
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      },
+
+      updateItem() {
+        ItemDataService.update(this.item.id, this.item)
+          .then(response => {
+            console.log(response.data);
+            this.message = 'The item was updated successfully!';
           })
           .catch(e => {
             console.log(e);
@@ -83,7 +122,17 @@
       newItem() {
         this.submitted = false;
         this.item = {};
+      },
+      
+      abm() {
+        if (this.action != 'create') {
+          console.log(this.action, this.ItemId)
+          this.getItem(this.ItemId)
+        }
       }
+    },
+    mounted() {
+      this.abm()
     }
   };
   </script>

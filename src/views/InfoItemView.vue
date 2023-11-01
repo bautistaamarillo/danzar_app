@@ -12,10 +12,14 @@
             </button>
           </div>
         </div>
-          <button class="btn btn-primary" @click = "add_item = !add_item">Añadir</button>
-          <div v-if="add_item === true">
-            <AddItem/>
-          </div>
+          <button class="btn btn-primary" @click = "Abm('create', ItemId)">Añadir</button>
+          
+          
+          <!-- <div v-if="item_view === true">
+            <ItemView
+              :ItemId = currentItem.id
+            />
+          </div> -->
       </div>
       <div class="col-md-6">
         <h4>Listado de items</h4>
@@ -27,12 +31,16 @@
             @click="setActiveItem(item, index)"
           >
             {{ item.name }}
+            
+          <button class="btn btn-outline-warning" @click = "Abm('edit', item.id)">Editar</button>
+          <button class="btn btn-outline-danger" @click = "Abm('delete', item.id)">Eliminar</button>
+
           </li>
         </ul>
 
       </div>
       <div class="col-md-6">
-        <div v-if="currentItem">
+        <!-- <div v-if="currentItem">
           <h4>Item</h4>
           <div>
             <label><strong>Nombre:</strong></label> {{ currentItem.name }}
@@ -56,14 +64,20 @@
         <div v-else>
           <br />
           <p>Por favor seleccione un Item...</p>
-        </div>
+        </div> -->
       </div>
+      <div v-if="visible_item === true">
+            <AbmItemView
+              :action = action
+              :ItemId = ItemId
+            />
+          </div>
     </div>
   </template>
   
   <script>
   import ItemDataService from "@/services/ItemDataService";
-  import AddItem from "@/components/ABM/AddItem.vue"
+  import AbmItemView from "@/components/ABM/AbmItemView.vue"
   import ItemView from "@/components/ABM/ItemView.vue"
   
   export default {
@@ -75,12 +89,12 @@
         currentIndex: -1,
         name: "",
         filteredItems: [],
-        add_item: false,
-        item_view: false,
+        visible_item: false,
+        action: '',
       };
     },
     components: {
-    AddItem,
+    AbmItemView,
     ItemView
   },
     methods: {
@@ -110,6 +124,13 @@
       searchName() {
         this.filteredItems = this.items.filter((item) => item.name.includes(this.name))
         this.setActiveItem(null);
+      },
+
+      Abm(action, ItemId) {
+        this.action = action
+        this.ItemId = ItemId
+        this.visible_item = !this.visible_item
+        console.log(action, ItemId)
       }
     },
     mounted() {

@@ -1,7 +1,7 @@
 <template>
     <div v-if="currentItem" class="edit-form">
       <h4>Item</h4>
-      <form>
+      <!-- <form>
         <div class="form-group">
           <label for="name">Nombre</label>
           <input type="text" class="form-control" id="name"
@@ -21,13 +21,13 @@
           />
         </div>
   
-      </form>
+      </form> -->
   
-      <button class="btn btn-outline-danger"
+      <!-- <button class="btn btn-outline-danger"
         @click="deleteItem"
       >
         Eliminar
-      </button>
+      </button> -->
   
       <button type="submit" class="btn btn-outline-secondary"
         @click="updateItem"
@@ -45,7 +45,6 @@
   
   <script>
   import ItemDataService from "@/services/ItemDataService";
-  import axios from "axios"
   
   export default {
     name: "ItemView",
