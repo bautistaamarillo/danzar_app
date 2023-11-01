@@ -78,7 +78,7 @@
   <script>
   import ItemDataService from "@/services/ItemDataService";
   import AbmItemView from "@/components/ABM/AbmItemView.vue"
-  import ItemView from "@/components/ABM/ItemView.vue"
+  // import ItemView from "@/components/ABM/ItemView.vue"
   
   export default {
     name: "items-list",
@@ -95,7 +95,7 @@
     },
     components: {
     AbmItemView,
-    ItemView
+    // ItemView
   },
     methods: {
       retrieveItems() {

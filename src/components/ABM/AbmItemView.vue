@@ -75,7 +75,7 @@
       },
 
       saveItem() {
-        if (this.action = 'create') {
+        if (this.action == 'create') {
           var data = {
             name: this.item.name,
             amount: this.item.amount,
