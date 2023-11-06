@@ -12,14 +12,54 @@
             </button>
           </div>
         </div>
-          <button class="btn btn-primary" @click = "Abm('create', ItemId)">Añadir</button>
-          
-          
-          <!-- <div v-if="item_view === true">
-            <ItemView
-              :ItemId = currentItem.id
+    
+    <button
+      type="button"
+      class="btn btn-primary"
+      @click="Abm('create', ItemId)"
+    >
+      Añadir
+    </button>
+
+    <!-- Modal -->
+    <!-- <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Nuevo Item</h5>
+            <button
+              type="button"
+              class="btn-close"
+              @click="close()"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">  -->
+
+            <div v-if="visible_item === true">
+            <AbmItemView
+              :action = action
+              :ItemId = ItemId
+              v-on:cerrar="close()"
             />
-          </div> -->
+            </div>
+            <div v-else>
+              Por favor seleccione un Item
+            </div>
+<!-- 
+          </div>
+          
+        </div>
+      </div>
+    </div> -->
+          
       </div>
       <div class="col-md-6">
         <h4>Listado de items</h4>
@@ -32,15 +72,25 @@
           >
             {{ item.name }}
             
-          <button class="btn btn-outline-warning" @click = "Abm('edit', item.id)">Editar</button>
-          <button class="btn btn-outline-danger" @click = "Abm('delete', item.id)">Eliminar</button>
+          <button
+            class="btn btn-outline-warning"
+            @click = "Abm('edit', item.id)"
+          >
+            Editar
+          </button>
+          <button
+            class="btn btn-outline-danger"
+            @click = "Abm('delete', item.id)"
+          >
+            Eliminar
+          </button>
 
           </li>
         </ul>
 
       </div>
       <div class="col-md-6">
-        <!-- <div v-if="currentItem">
+        <div v-if="currentItem">
           <h4>Item</h4>
           <div>
             <label><strong>Nombre:</strong></label> {{ currentItem.name }}
@@ -51,34 +101,18 @@
           <div>
             <label><strong>ID de categoria:</strong></label> {{ currentItem.category_id }}
           </div>
-  
-          <button class="btn btn-outline-warning" @click = "item_view = !item_view">
-            Editar
-          </button>
-          <div v-if="item_view === true">
-            <ItemView
-              :ItemId = currentItem.id
-            />
-          </div>
         </div>
         <div v-else>
-          <br />
+          <br/>
           <p>Por favor seleccione un Item...</p>
-        </div> -->
+        </div>
       </div>
-      <div v-if="visible_item === true">
-            <AbmItemView
-              :action = action
-              :ItemId = ItemId
-            />
-          </div>
     </div>
   </template>
   
   <script>
   import ItemDataService from "@/services/ItemDataService";
   import AbmItemView from "@/components/ABM/AbmItemView.vue"
-  // import ItemView from "@/components/ABM/ItemView.vue"
   
   export default {
     name: "items-list",
@@ -94,8 +128,7 @@
       };
     },
     components: {
-    AbmItemView,
-    // ItemView
+    AbmItemView
   },
     methods: {
       retrieveItems() {
@@ -130,7 +163,11 @@
         this.action = action
         this.ItemId = ItemId
         this.visible_item = !this.visible_item
-        console.log(action, ItemId)
+        console.log(action, ItemId, this.visible_item)
+      },
+
+      close() {
+        this.visible_item = false
       }
     },
     mounted() {
