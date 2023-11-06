@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Operar Categorias</h1>
-    <form>
+    <form @submit.prevent>
       Nombre
       <input type="text" v-model="registro.name" /> <br />
       <input type="submit" value="nuevo" @click="crear()" />
