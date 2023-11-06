@@ -5,7 +5,16 @@
       <h1>Estudiantes</h1>
     </div>
   </div>
-
+ <!-- Button trigger modal -->
+ <button
+      type="button"
+      class="btn btn-primary"
+      @click="estudianteVisible = !estudianteVisible"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+    >
+      Crear Nueva
+    </button>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -55,16 +64,7 @@
     </tbody>
   </table>
   
-    <!-- Button trigger modal -->
-    <button
-      type="button"
-      class="btn btn-primary"
-      @click="estudianteVisible = !estudianteVisible"
-      data-bs-toggle="modal"
-      data-bs-target="#exampleModal"
-    >
-      Crear Nueva
-    </button>
+   
 
     <!-- Modal -->
     <div

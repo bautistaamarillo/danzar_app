@@ -1,6 +1,6 @@
 <template>
   <div>
-    Inserte vista de home re fachera
+    <h1>Bienvenido</h1>
   </div>
 </template>
 

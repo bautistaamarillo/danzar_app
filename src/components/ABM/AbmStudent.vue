@@ -1,14 +1,25 @@
 <template>
   <div>
     <h1></h1>
-    <form @submit.prevent>
-      
+
       Nombre
-      <input type="text" v-model="name"> <br>
+      <input type="text" v-model="registro.name"> <br>
       Apellido
-      <input type="text" v-model="last_name"> <br>
+      <input type="text" v-model="registro.last_name"> <br>
+      DNI
+      <input type="text" v-model="registro.dni"> <br>
+      Direccion
+      <input type="text" v-model="registro.address"> <br>
+      Tel
+      <input type="text" v-model="registro.phone_number"> <br>
+      Observaciones
+      <input type="text" v-model="registro.observations"> <br>
+      Fecha cumpleaños
+      <input type="date" v-model="registro.birthdate"> <br>
+      Activo
+      <input type="text" v-model="registro.active"> <br>
       <input type="submit" value="nuevo" @click="crear()">
-    </form>
+   
   </div>
 </template>
 
@@ -22,9 +33,16 @@ export default {
   },
   data() {
       return {
-        name: "",
-        last_name: ""
-      
+        registro :
+        {name: "",
+        dni: "",
+        last_name: "",
+        address: "",
+        phone_number: "",
+        observations: "",
+        birthdate: "",
+        active: ""
+      },
       };
   },
 
