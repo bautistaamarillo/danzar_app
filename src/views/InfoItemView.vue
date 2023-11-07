@@ -50,9 +50,6 @@
               v-on:cerrar="close()"
             />
             </div>
-            <div v-else>
-              Por favor seleccione un Item
-            </div>
 <!-- 
           </div>
           

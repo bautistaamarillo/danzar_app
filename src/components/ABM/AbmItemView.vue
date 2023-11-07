@@ -1,7 +1,8 @@
 <template>
   <Transition name="modal">
     <div class="modal-mask">
-      <div class="modal-container">
+      <div class="modal-container" >
+        <div v-if="!submitted">
         <button
               type="button"
               class="btn-close"
@@ -33,38 +34,18 @@
 
         <div class="modal-footer">
           <slot name="footer">
-            default footer
+            <!-- default footer -->
             <button @click="saveItem" class="btn btn-success">Ok</button>
           </slot>
         </div>
       </div>
-    </div>
-  </Transition>
-  <!-- <div class="submit-form">
-    <div v-if="!submitted">
-      <div class="form-group">
-        <label for="name">Nombre</label>
-        <input type="text" class="form-control" id="name" required v-model="item.name" name="name" />
-      </div>
-
-      <div class="form-group">
-        <label for="amount">Precio</label>
-        <input class="form-control" id="amount" required v-model="item.amount" name="amount" />
-      </div>
-
-      <div class="form-group">
-        <label for="category_id">ID de Categoria</label>
-        <input class="form-control" id="category_id" required v-model="item.category_id" name="category_id" />
-      </div>
-
-      <button @click="saveItem" class="btn btn-success">Ok</button>
-    </div>
-
-    <div v-else>
+      <div v-else>
       <h4>Item guardado con exito!</h4>
       <button class="btn btn-success" @click="newItem">Nuevo</button>
+      </div>
+      </div>
     </div>
-  </div> -->
+  </Transition>
 </template>
   
 <script>
