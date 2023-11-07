@@ -1,144 +1,148 @@
 <template>
-  <div>
-    <div class="card">
-      <div class="card-body">
-        <h1>Estas son las categorias.</h1>
-      </div>
-    </div>
-
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="categoria in categorias" :key="categoria.id">
-          <td>{{ categoria.id }}</td>
-          <td>{{ categoria.name }}</td>
-          <td>
-            <button
-              type="button"
-              class="btn btn-outline-warning"
-              @click="editar()"
-            >
-              Editar
-            </button>
-            <button
-              type="button"
-              class="btn btn-outline-danger"
-              @click="eliminar()"
-            >
-              Eliminar
-            </button>
-            <button
-              type="button"
-              class="btn btn-outline-info"
-              @click="consultar()"
-            >
-              Info
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!-- Button trigger modal -->
-    <button
-      type="button"
-      class="btn btn-primary"
-      @click="categoriaAbmVisible = !categoriaAbmVisible "
-      data-bs-toggle="modal"
-      data-bs-target="#exampleModal"
-    >
-      Crear Nueva
-    </button>
-
-    <!-- Modal -->
-    <div
-      class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Nueva Categoria</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body"> 
-
-            <div v-if="categoriaAbmVisible === true">
-              <AbmCategoryView />
-            </div>
-
-          </div>
-          
+  <div class="list row">
+    <div class="col-md-8">
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Busqueda por nombre"
+          v-model="name"
+        />
+        <div class="input-group-append">
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            @click="searchName"
+          >
+            Buscar
+          </button>
         </div>
       </div>
-    </div>
 
-    <!-- <button type="button"  @click="categoriaAbmVisible=!categoriaAbmVisible">Añadir Nuevo</button>  -->
+      <button
+        type="button"
+        class="btn btn-primary"
+        @click="Abm('create', CategoryId)"
+      >
+        Añadir
+      </button>
+      <div v-if="visible_category === true">
+        <AbmCategoryView :action="action" :CategoryId="CategoryId" v-on:cerrar="close()" />
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4>Listado de categorias</h4>
+      <ul class="list-group">
+        <li
+          class="list-group-category"
+          :class="{ active: index == currentIndex }"
+          v-for="(category, index) in filteredCategories"
+          :key="index"
+          @click="setActiveCategory(category, index)"
+        >
+          {{ category.name }}
+
+          <button class="btn btn-outline-warning" @click="Abm('edit', category.id)">
+            Editar
+          </button>
+          <button
+            class="btn btn-outline-danger"
+            @click="Abm('delete', category.id)"
+          >
+            Eliminar
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <div v-if="currentCategory">
+        <h4>Categoria</h4>
+        <div>
+          <label><strong>Nombre:</strong></label> {{ currentCategory.name }}
+        </div>
+       
+      </div>
+      <div v-else>
+        <br />
+        <p>Por favor seleccione una categoria...</p>
+      </div>
+    </div>
   </div>
 </template>
 
-
 <script>
+import CategoryDataService from "@/services/CategoryDataService";
 import AbmCategoryView from "@/components/ABM/AbmCategoryView.vue";
-import axios from "axios";
+
 export default {
+  name: "categories-list",
   data() {
     return {
-      categoriaAbmVisible: false,
-      categorias: [],
+      categories: [],
+      currentCategory: null,
+      currentIndex: -1,
+      name: "",
+      filteredCategories: [],
+      visible_category: false,
+      action: "",
     };
   },
   components: {
     AbmCategoryView,
   },
-  mounted() {
-    axios
-      .get("http://localhost/danzar_api/public/categories")
-      .then((response) => {
-        console.log(response);
-        this.categorias = response.data;
-      })
-      .catch(function (error) {
-        console.log(error);
-      }); 
-  },
   methods: {
-    modificar() {
-      var url = "http://localhost/danzar_api/public/categories/${categoria.id}";
-      var msg = { name: this.name };
-      console.log(url, msg);
-      axios
-        .put(url, msg)
+    retrieveCategories() {
+      CategoryDataService.getAll()
         .then((response) => {
-          console.log(response);
-          this.categorias = response.data;
+          this.categories = response.data;
+          this.searchName();
+          console.log(response.data);
         })
-        .catch(function (error) {
-          // Si hubo algun error mostramos algo
-          console.log(error);
+        .catch((e) => {
+          console.log(e);
         });
     },
-    eliminar() {
-      console.log("hola");
-    
+
+    refreshList() {
+      this.retrieveCategories();
+      this.currentCategory = null;
+      this.currentIndex = -1;
     },
+
+    setActiveCategory(category, index) {
+      this.currentCategory = category;
+      this.currentIndex = category ? index : -1;
+    },
+
+    searchName() {
+      this.filteredCategories = this.categories.filter((category) =>
+        category.name.includes(this.name)
+      );
+      this.setActiveCategory(null);
+    },
+
+    Abm(action, CategoryId) {
+      this.action = action;
+      this.CategoryId = CategoryId;
+      this.visible_category = !this.visible_category;
+      console.log(action, CategoryId, this.visible_category);
+    },
+
+    close() {
+      this.visible_category = false;
+      this.retrieveCategories();  
+    },
+  },
+  mounted() {
+    this.retrieveCategories();
   },
 };
 </script>
 
 <style>
+.list {
+  text-align: left;
+  max-width: 750px;
+  margin: auto;
+}
 </style>
