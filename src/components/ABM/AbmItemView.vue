@@ -1,48 +1,50 @@
 <template>
   <Transition name="modal">
     <div class="modal-mask">
-      <div class="modal-container" >
+      <div class="modal-container">
         <div v-if="!submitted">
-        <button
-              type="button"
-              class="btn-close"
-              @click="closeAbm()"
-              aria-label="Close"
-            ></button>
-        <div class="modal-header">
-          <slot name="header">{{ header }}</slot>
+          <button type="button" class="btn-close" @click="closeAbm()" aria-label="Close"></button>
+          <div class="modal-header">
+            <slot name="header">{{ header }}</slot>
+          </div>
+
+          <div class="modal-body">
+            <slot name="body">
+              <div class="form-group">
+                <label for="name">Nombre</label>
+                <input type="text" class="form-control" id="name" required v-model="item.name" name="name" />
+              </div>
+
+              <div class="form-group">
+                <label for="amount">Precio</label>
+                <input class="form-control" id="amount" required v-model="item.amount" name="amount" />
+              </div>
+
+              <div class="form-group">
+                <label for="category_id">Categoria</label>
+                <select class="form-control"
+                id="category_id" required v-model="item.category_id" name="category_id" >
+                <option disabled value="">Seleccione una categoria</option>
+                <option v-for="category in categories" :value="category.id" :key="category.id">
+                  {{ category.name }}
+                </option>
+                </select>
+              </div>
+            </slot>
+          </div>
+
+          <div class="modal-footer">
+            <slot name="footer">
+              ¿Guardar?
+              <button @click="saveItem" class="btn btn-success">Ok</button>
+            </slot>
+          </div>
         </div>
-
-        <div class="modal-body">
-          <slot name="body">
-            <div class="form-group">
-              <label for="name">Nombre</label>
-              <input type="text" class="form-control" id="name" required v-model="item.name" name="name" />
-            </div>
-
-            <div class="form-group">
-              <label for="amount">Precio</label>
-              <input class="form-control" id="amount" required v-model="item.amount" name="amount" />
-            </div>
-
-            <div class="form-group">
-              <label for="category_id">ID de Categoria</label>
-              <input class="form-control" id="category_id" required v-model="item.category_id" name="category_id" />
-            </div>
-          </slot>
+        <div v-else>
+          <button type="button" class="btn-close" @click="closeAbm()" aria-label="Close"></button>
+          <h4>Item guardado con exito!</h4>
+          <button class="btn btn-success" @click="newItem">Nuevo</button>
         </div>
-
-        <div class="modal-footer">
-          <slot name="footer">
-            <!-- default footer -->
-            <button @click="saveItem" class="btn btn-success">Ok</button>
-          </slot>
-        </div>
-      </div>
-      <div v-else>
-      <h4>Item guardado con exito!</h4>
-      <button class="btn btn-success" @click="newItem">Nuevo</button>
-      </div>
       </div>
     </div>
   </Transition>
@@ -50,6 +52,7 @@
   
 <script>
 import ItemDataService from "@/services/ItemDataService";
+import CategoryDataService from "@/services/CategoryDataService";
 
 export default {
   name: "AbmItemView",
@@ -62,6 +65,7 @@ export default {
         amount: "",
         category_id: ""
       },
+      categories: [],
       submitted: false,
       header: ''
     };
@@ -71,6 +75,17 @@ export default {
       ItemDataService.get(id)
         .then(response => {
           this.item = response.data[0];
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+
+    retrieveCategories() {
+      CategoryDataService.getAll()
+        .then(response => {
+          this.categories = response.data;
           console.log(response.data);
         })
         .catch(e => {
@@ -140,11 +155,11 @@ export default {
       }
       switch (this.action) {
         case 'create': this.header = 'Ingresar item'
-        break
+          break
         case 'edit': this.header = 'Editar item'
-        break
+          break
         case 'delete': this.header = '¿Esta seguro de eliminar este item?'
-        break
+          break
       }
     },
 
@@ -153,7 +168,8 @@ export default {
     }
   },
   mounted() {
-    this.abm()
+    this.abm();
+    this.retrieveCategories();
   }
 };
 </script>
