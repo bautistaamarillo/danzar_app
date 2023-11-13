@@ -14,6 +14,7 @@
         </div>
 
         <div class="modal-body">
+          <div>
           <slot name="body">
             <div class="form-group">
               <label for="name">Nombre</label>
@@ -44,9 +45,19 @@
               <label for="observations">Observaciones</label>
               <input class="form-control" id="observations" required v-model="student.observations" name="observations" />
             </div>
-            
-            
+
+            <div v-for="item in items" :value="item.id" :key="item.id">
+                  {{ item.name }} <input type="checkbox" value={{item.seleccion}}>  
+                  <div v-if="item.seleccion === true"> 
+                  
+                  </div>
+                </div>
+
           </slot>
+          </div>
+          
+          
+            
         </div>
 
         <div class="modal-footer">
@@ -67,6 +78,7 @@
   
 <script>
 import StudentDataService from "@/services/StudentDataService";
+import ItemDataService from "@/services/ItemDataService";
 
 export default {
   name: "AbmStudentView",
@@ -82,7 +94,9 @@ export default {
         phone_number: "",
         birthdate: "",
         observations: "",
+        itemstudents: [{iditem:null}],
       },
+      items: [],
       submitted: false,
       header: ''
     };
@@ -96,8 +110,26 @@ export default {
         })
         .catch(e => {
           console.log(e);
+        })
+      },
+      getItems() {
+      ItemDataService.getAll()
+        .then(response => {
+          this.items = response.data;
+          console.log(response.data);
+          var i = 0;
+          for(i = 0; i<this.items.length;i++){
+            this.items[i].seleccion
+          }
+        })
+
+
+        .catch(e => {
+          console.log(e);
         });
     },
+
+    
 
     saveStudent() {
       if (this.action == 'create') {
@@ -109,8 +141,7 @@ export default {
           phone_number: this.student.phone_number,
           birthdate: this.student.birthdate,
           observations: this.student.observations,
-          
-         
+          studentitems: this.items.filter(E => E.seleccion)
         };
 
         StudentDataService.create(data)
@@ -180,7 +211,8 @@ export default {
     }
   },
   mounted() {
-    this.abm()
+    this.abm(),
+    this.getItems()
   }
 };
 </script>
