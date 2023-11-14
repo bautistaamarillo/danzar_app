@@ -2,28 +2,15 @@
   <div class="list row">
     <div class="col-md-8">
       <div class="input-group mb-3">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Busqueda por nombre"
-          v-model="name"
-        />
+        <input type="text" class="form-control" placeholder="Busqueda por nombre" v-model="name" />
         <div class="input-group-append">
-          <button
-            class="btn btn-outline-secondary"
-            type="button"
-            @click="searchName"
-          >
+          <button class="btn btn-outline-secondary" type="button" @click="searchName">
             Buscar
           </button>
         </div>
       </div>
 
-      <button
-        type="button"
-        class="btn btn-primary"
-        @click="Abm('create', CategoryId)"
-      >
+      <button type="button" class="btn btn-primary" @click="Abm('create', CategoryId)">
         Añadir
       </button>
       <div v-if="visible_category === true">
@@ -33,25 +20,24 @@
     <div class="col-md-6">
       <h4>Listado de categorias</h4>
       <ul class="list-group">
-        <li
-          class="list-group-category"
-          :class="{ active: index == currentIndex }"
-          v-for="(category, index) in filteredCategories"
-          :key="index"
-          @click="setActiveCategory(category, index)"
-        >
-          {{ category.name }}
-
-          <button class="btn btn-outline-warning" @click="Abm('edit', category.id)">
-            Editar
-          </button>
-          <button
-            class="btn btn-outline-danger"
-            @click="Abm('delete', category.id)"
-          >
-            Eliminar
-          </button>
-        </li>
+        <table>
+          <tr :class="{ active: index == currentIndex }" v-for="(category, index) in filteredCategories"
+          :key="index" @click="setActiveCategory(category, index)">
+            <td>
+              {{ category.name }}
+            </td>
+            <td>
+              <button class="btn btn-outline-warning" @click="Abm('edit', category.id)">
+                Editar
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-outline-danger" @click="Abm('delete', category.id)">
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </table>
       </ul>
     </div>
     <div class="col-md-6">
@@ -60,7 +46,7 @@
         <div>
           <label><strong>Nombre:</strong></label> {{ currentCategory.name }}
         </div>
-       
+
       </div>
       <div v-else>
         <br />
@@ -130,7 +116,7 @@ export default {
 
     close() {
       this.visible_category = false;
-      this.retrieveCategories();  
+      this.retrieveCategories();
     },
   },
   mounted() {
