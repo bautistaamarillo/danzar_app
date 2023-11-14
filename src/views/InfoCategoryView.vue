@@ -23,7 +23,7 @@
         <table>
           <tr :class="{ active: index == currentIndex }" v-for="(category, index) in filteredCategories"
           :key="index" @click="setActiveCategory(category, index)">
-            <td>
+            <td class="list-group-item">
               {{ category.name }}
             </td>
             <td>
