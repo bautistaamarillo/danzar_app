@@ -116,7 +116,7 @@ export default {
     },
 
     refreshList() {
-      this.retrievePayment();
+      this.retrievePayments();
       this.currentPayment = null;
       this.currentIndex = -1;
     },
@@ -143,7 +143,7 @@ export default {
     }
   },
   mounted() {
-    this.retrievePayment();
+    this.retrievePayments();
   }
 };
 </script>
