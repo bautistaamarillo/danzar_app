@@ -2,28 +2,15 @@
   <div class="list row">
     <div class="col-md-8">
       <div class="input-group mb-3">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Busqueda por nombre"
-          v-model="name"
-        />
+        <input type="text" class="form-control" placeholder="Busqueda por nombre" v-model="name" />
         <div class="input-group-append">
-          <button
-            class="btn btn-outline-secondary"
-            type="button"
-            @click="searchName"
-          >
+          <button class="btn btn-outline-secondary" type="button" @click="searchName">
             Buscar
           </button>
         </div>
       </div>
 
-      <button
-        type="button"
-        class="btn btn-primary"
-        @click="Abm('create', StudentId)"
-      >
+      <button type="button" class="btn btn-primary" @click="Abm('create', StudentId)">
         Añadir
       </button>
 
@@ -35,32 +22,31 @@
     <div class="col-md-6">
       <h4>Listado de estudiantes</h4>
       <ul class="list-group">
-        <li
-          class="list-group-student"
-          :class="{ active: index == currentIndex }"
-          v-for="(student, index) in filteredStudents"
-          :key="index"
-          @click="setActiveStudent(student, index)"
-        >
-          {{ student.name }}
-
-          <button class="btn btn-outline-warning" @click="Abm('edit', student.id)">
-            Editar
-          </button>
-          <button
-            class="btn btn-outline-danger"
-            @click="Abm('delete', student.id)"
-          >
-            Eliminar
-          </button>
-        </li>
+        <table>
+          <tr :class="{ active: index == currentIndex }" v-for="(student, index) in filteredStudents"
+          :key="index" @click="setActiveStudent(student, index)">
+            <td class="list-group-item">
+              {{ student.name }}
+            </td>
+            <td>
+              <button class="btn btn-outline-warning" @click="Abm('edit', student.id)">
+                Editar
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-outline-danger" @click="Abm('delete', student.id)">
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </table>
       </ul>
     </div>
 
 
 
 
-    
+
     <!-- <div class="col-md-6">
       <div v-if="currentStudent">
         <h4>Student</h4>
