@@ -47,7 +47,7 @@
             </div>
 
             <div v-for="item in items" :value="item.id" :key="item.id">
-                  {{ item.name }} <input type="checkbox" value={{item.seleccion}}>  
+                  {{ item.name }} <input type="checkbox"  v-model="item.seleccion">  
                   <div v-if="item.seleccion === true"> 
                   
                   </div>
@@ -94,6 +94,7 @@ export default {
         phone_number: "",
         birthdate: "",
         observations: "",
+        active:true,
         itemstudents: [{iditem:null}],
       },
       items: [],
@@ -119,7 +120,7 @@ export default {
           console.log(response.data);
           var i = 0;
           for(i = 0; i<this.items.length;i++){
-            this.items[i].seleccion
+            this.items[i].seleccion = false;
           }
         })
 
@@ -141,9 +142,16 @@ export default {
           phone_number: this.student.phone_number,
           birthdate: this.student.birthdate,
           observations: this.student.observations,
+          active: this.active,
           studentitems: this.items.filter(E => E.seleccion)
         };
 
+
+        console.log(JSON.stringify(data));
+        // console.log(JSON.stringify(this.items));
+        // console.log(JSON.stringify(this.items.filter(E => E.seleccion)));
+        
+        
         StudentDataService.create(data)
           .then(response => {
             this.student.id = response.data.id;
