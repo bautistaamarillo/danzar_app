@@ -35,7 +35,7 @@
             </div>
             <div class="form-group">
               <label for="phone_number">Numero</label>
-              <input class="form-control" id="phone_number" required v-model="student.phone_numer" name="phone_number" />
+              <input class="form-control" id="phone_number" required v-model="student.phone_number" name="phone_number" />
             </div>
             <div class="form-group">
               <label for="birthdate">Fecha de nacimiento</label>
