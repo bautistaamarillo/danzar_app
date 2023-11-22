@@ -43,18 +43,14 @@
       </ul>
     </div>
 
-
-
-
-
-    <!-- <div class="col-md-6">
+    <div class="col-md-6">
       <div v-if="currentStudent">
         <h4>Student</h4>
         <div>
           <label><strong>Nombre:</strong></label> {{ currentStudent.name }}
         </div>
         <div>
-          <label><strong>Apellido:</strong></label> {{ currentStudent.lastname }}
+          <label><strong>Apellido:</strong></label> {{ currentStudent.last_name }}
         </div>
         <div>
           <label><strong>Direccion:</strong></label> {{ currentStudent.address }}
@@ -72,13 +68,12 @@
           <label><strong>Fecha de nacimiento:</strong></label> {{ currentStudent.birthdate }}
         </div>
         
-       
       </div>
       <div v-else>
         <br />
         <p>Por favor seleccione un Estudiante...</p>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
