@@ -61,7 +61,7 @@
           id: null,
           student_id: "",
           date: "",
-          invoice_number: ""
+          number: ""
         },
         submitted: false,
         header: ''

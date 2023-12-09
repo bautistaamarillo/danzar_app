@@ -36,9 +36,9 @@ const routes = [
     component: () => import('../views/InfoItemView.vue')
   },
   {
-    path: '/PaymentView',
-    name: 'PaymentView',
-    component: () => import('../views/PaymentView.vue')
+    path: '/InfoPaymentView',
+    name: 'InfoPaymentView',
+    component: () => import('../views/InfoPaymentView.vue')
   }
 ]
 

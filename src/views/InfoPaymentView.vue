@@ -2,65 +2,51 @@
   <div class="list row">
     <div class="col-md-8">
       <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Busqueda por id"
-          v-model="name"/>
+        <input type="text" class="form-control" placeholder="Busqueda por id" v-model="name" />
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button"
-            @click="searchName"
-          >
+          <button class="btn btn-outline-secondary" type="button" @click="searchName">
             Buscar
           </button>
         </div>
       </div>
-  
-  <button
-    type="button"
-    class="btn btn-primary"
-    @click="Abm('create', PaymentId)"
-  >
-    Añadir
-  </button>
 
-  
+      <button type="button" class="btn btn-primary" @click="Abm('create', PaymentId)">
+        Añadir
+      </button>
 
-          <div v-if="visible_payment === true">
-          <AbmPayment
-            :action = action
-            :PaymentId = PaymentId
-            v-on:cerrar="close()"
-          />
-          </div>
 
-        
+
+      <div v-if="visible_payment === true">
+        <AbmPayment :action=action :PaymentId=PaymentId v-on:cerrar="close()" />
+      </div>
+
+
     </div>
     <div class="col-md-6">
       <h4>Listado de payments</h4>
       <ul class="list-group">
-        <li class="list-group-payment"
-          :class="{ active: index == currentIndex }"
-          v-for="(payment, index) in filteredPayments"
-          :key="index"
-          @click="setActivePayment(payment, index)"
-        >
-          {{ payment.id }}
-          
-        <button
-          class="btn btn-outline-warning"
-          @click = "Abm('edit', payment.id)"
-        >
-          Editar
-        </button>
-        <button
-          class="btn btn-outline-danger"
-          @click = "Abm('delete', payment.id)"
-        >
-          Eliminar
-        </button>
+        <table>
+          <tr class="list-group-payment" :class="{ active: index == currentIndex }"
+            v-for="(payment, index) in filteredPayments" :key="index" @click="setActivePayment(payment, index)">
+            <td class="list-group-item">
+              {{ payment.id }}
+            </td>
+            <td>
+              <button class="btn btn-outline-warning" @click="Abm('edit', payment.id)">
+                Editar
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-outline-danger" @click="Abm('delete', payment.id)">
+                Eliminar
+              </button>
+            </td>
 
-        </li>
+          </tr>
+        </table>
       </ul>
-
     </div>
+
     <div class="col-md-6">
       <div v-if="currentPayment">
         <h4>Payment</h4>
@@ -71,11 +57,11 @@
           <label><strong>Fecha:</strong></label> {{ currentPayment.date }}
         </div>
         <div>
-          <label><strong>Numero de Factura:</strong></label> {{ currentPayment.invoice_number }}
+          <label><strong>Numero de Factura:</strong></label> {{ currentPayment.number }}
         </div>
       </div>
       <div v-else>
-        <br/>
+        <br />
         <p>Por favor seleccione un Payment...</p>
       </div>
     </div>
@@ -100,8 +86,8 @@ export default {
     };
   },
   components: {
-  AbmPayment
-},
+    AbmPayment
+  },
   methods: {
     retrievePayments() {
       PaymentDataService.getAll()
@@ -125,9 +111,9 @@ export default {
       this.currentPayment = payment;
       this.currentIndex = payment ? index : -1;
     },
-    
+
     searchName() {
-      this.filteredPayments = this.payments.filter((payment) => payment.name.includes(this.name))
+      this.filteredPayments = this.payments.filter((payment) => payment.date.includes(this.name))
       this.setActivePayment(null);
     },
 
