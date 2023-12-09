@@ -2,7 +2,7 @@
   <div class="list row">
     <div class="col-md-8">
       <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Busqueda por id" v-model="name" />
+        <input type="text" class="form-control" placeholder="Busqueda por fecha" v-model="name" />
         <div class="input-group-append">
           <button class="btn btn-outline-secondary" type="button" @click="searchName">
             Buscar

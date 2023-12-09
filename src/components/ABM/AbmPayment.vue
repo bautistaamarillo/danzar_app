@@ -22,7 +22,7 @@
   
               <div class="form-group">
                 <label for="category_id">Fecha</label>
-                <input class="form-control" id="category_id" required v-model="payment.date" name="date" />
+                <input type="date" class="form-control" id="category_id" required v-model="payment.date" name="date" />
               </div>
               <div class="form-group">
                 <label for="amount">Numero de Factura</label>
