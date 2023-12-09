@@ -26,7 +26,7 @@
               </div>
               <div class="form-group">
                 <label for="amount">Numero de Factura</label>
-                <input class="form-control" id="amount" required v-model="payment.invoice_number" name="invoice_number" />
+                <input class="form-control" id="amount" required v-model="payment.number" name="number" />
               </div>
               
               
@@ -85,7 +85,7 @@
       
             student_id: this.payment.student_id,
             date: this.payment.date,
-            inovice_number: this.payment.invoice_number
+            number: this.payment.number
           
           };
   
