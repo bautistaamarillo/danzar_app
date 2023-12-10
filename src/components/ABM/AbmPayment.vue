@@ -16,17 +16,22 @@
           <div class="modal-body">
             <slot name="body">
               <div class="form-group">
-                <label for="amount">Id Estudiante</label>
-                <input class="form-control" id="amount" required v-model="payment.student_id" name="student_id" />
+                <label for="amount">Estudiante</label>
+                <select class="form-control" id="student" required v-model="payment.student_id" name="student_id">
+                  <option disabled value="">Seleccione un estudiante</option>
+                  <option v-for="student in students" :value="student.id" :key="student.id">
+                    {{ student.name + ' ' + student.last_name }}
+                  </option>
+                </select>
               </div>
   
               <div class="form-group">
                 <label for="category_id">Fecha</label>
-                <input type="date" class="form-control" id="category_id" required v-model="payment.date" name="date" />
+                <input type="date" class="form-control" id="date" required v-model="payment.date" name="date" />
               </div>
               <div class="form-group">
                 <label for="amount">Numero de Factura</label>
-                <input class="form-control" id="amount" required v-model="payment.number" name="number" />
+                <input class="form-control" id="number" required v-model="payment.number" name="number" />
               </div>
               
               
@@ -51,6 +56,7 @@
     
   <script>
   import PaymentDataService from "@/services/PaymentDataService";
+  import StudentDataService from "@/services/StudentDataService";
   
   export default {
     name: "AbmPayment",
@@ -63,6 +69,7 @@
           date: "",
           number: ""
         },
+        students: [],
         submitted: false,
         header: ''
       };
@@ -78,6 +85,18 @@
             console.log(e);
           });
       },
+
+      retrieveStudents() {
+      StudentDataService.getAll()
+        .then(response => {
+          this.students = response.data;
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+
   
       savePayment() {
         if (this.action == 'create') {
@@ -156,7 +175,8 @@
       }
     },
     mounted() {
-      this.abm()
+      this.abm();
+      this.retrieveStudents();
     }
   };
   </script>

@@ -29,7 +29,7 @@
           <tr class="list-group-payment" :class="{ active: index == currentIndex }"
             v-for="(payment, index) in filteredPayments" :key="index" @click="setActivePayment(payment, index)">
             <td class="list-group-item">
-              {{ payment.id }}
+              {{ payment.date }}
             </td>
             <td>
               <button class="btn btn-outline-warning" @click="Abm('edit', payment.id)">
@@ -51,7 +51,7 @@
       <div v-if="currentPayment">
         <h4>Payment</h4>
         <div>
-          <label><strong>ID</strong></label> {{ currentPayment.student_id }}
+          <label><strong>ID del estudiante</strong></label> {{ currentPayment.student_id }}
         </div>
         <div>
           <label><strong>Fecha:</strong></label> {{ currentPayment.date }}
