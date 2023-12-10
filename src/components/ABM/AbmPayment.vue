@@ -16,7 +16,7 @@
           <div class="modal-body">
             <slot name="body">
               <div class="form-group">
-                <label for="amount">Estudiante</label>
+                <label for="student">Estudiante</label>
                 <select class="form-control" id="student" required v-model="payment.student_id" name="student_id">
                   <option disabled value="">Seleccione un estudiante</option>
                   <option v-for="student in students" :value="student.id" :key="student.id">
@@ -26,15 +26,19 @@
               </div>
   
               <div class="form-group">
-                <label for="category_id">Fecha</label>
+                <label for="date">Fecha</label>
                 <input type="date" class="form-control" id="date" required v-model="payment.date" name="date" />
               </div>
               <div class="form-group">
-                <label for="amount">Numero de Factura</label>
+                <label for="number">Numero de Factura</label>
                 <input class="form-control" id="number" required v-model="payment.number" name="number" />
               </div>
               
-              
+              <div class="form-group">
+                <label for="amount">Monto total</label>
+                <input class="form-control" id="amount" required v-model="payment.amount" name="amount" />
+              </div>
+
             </slot>
           </div>
   
@@ -104,7 +108,8 @@
       
             student_id: this.payment.student_id,
             date: this.payment.date,
-            number: this.payment.number
+            number: this.payment.number,
+            amount: this.payment.amount
           
           };
   

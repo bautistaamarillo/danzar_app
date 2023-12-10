@@ -59,6 +59,9 @@
         <div>
           <label><strong>Numero de Factura:</strong></label> {{ currentPayment.number }}
         </div>
+        <div>
+          <label><strong>Monto total:</strong></label> {{ '$' + currentPayment.amount }}
+        </div>
       </div>
       <div v-else>
         <br />
