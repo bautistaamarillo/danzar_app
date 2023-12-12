@@ -34,13 +34,21 @@
                     <div v-for="(cadaItem, n) in itemstudents" :key="n">
                       {{cadaItem.id+' '+cadaItem.name}}
                       
-                    {{ payment.amount = payment.amount + cadaItem.amount}}
+                    
+                   <li hidden>
+                    {{ payment.amount = payment.total + cadaItem.amount  }}
+                    {{   payment.total = cadaItem.amount  }}
+                   </li> 
                      
                     </div> 
 
                   </div>
 
                   <div v-else> <h5>No se encontraron items..</h5>
+                    <li hidden>
+                    {{ payment.amount = 0   }}
+
+                   </li> 
                     </div>
                     </div>
                  
@@ -98,7 +106,7 @@
           student_id: "",
           date: "",
           amount: 0,
-          total:0
+          total: 0
 
         },
         
