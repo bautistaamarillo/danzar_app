@@ -40,7 +40,8 @@
 
                   </div>
 
-                  
+                  <div v-else> <h5>No se encontraron items..</h5>
+                    </div>
                     </div>
                  
                     
@@ -109,6 +110,8 @@
         estadoCheckbox: true 
          };
     },
+    
+  
     created(){
       this.$watch("payment.student_id", this.observedId);
     },
