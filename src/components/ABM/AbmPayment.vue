@@ -17,14 +17,32 @@
             <slot name="body">
               <div class="form-group">
                 <label for="student">Estudiante</label>
-                <select class="form-control" id="student" required v-model="payment.student_id" name="student_id">
+                <select class="form-control" id="student" required v-model="payment.student_id" name="student_id"  >
                   <option disabled value="">Seleccione un estudiante</option>
-                  <option v-for="student in students" :value="student.id" :key="student.id">
-                    {{ student.name + ' ' + student.last_name }}
-                  </option>
+                  <option v-for="student in students" :value="student.id" :key="student.id" >
+                    {{ student.name + ' ' + student.last_name}} 
+                  </option>       
                 </select>
+               <div v-show="payment.student_id != ''">
+                <div v-for="(item, i) in items" :key="i">
+                  <li hidden>  {{n = 0}}</li>
+                  <div v-for="(cadaItem, n) in itemstudents" :key="n">
+                     <div v-if="item.name === cadaItem.name">
+                      {{ cadaItem.name }}<input type="checkbox" v-model="estadoCheckbox" value="cadaItem.id">
+                    </div>
+                      
+                      <li hidden>  {{n = itemstudents}}</li>
+                    </div>
+                    {{ item.name }}<input type="checkbox" >
+                    </div>
+                    
+                    </div>
+                 
+                    
+              
               </div>
-  
+            
+         
               <div class="form-group">
                 <label for="date">Fecha</label>
                 <input type="date" class="form-control" id="date" required v-model="payment.date" name="date" />
@@ -59,8 +77,10 @@
   </template>
     
   <script>
+  import axios from "axios";
   import PaymentDataService from "@/services/PaymentDataService";
   import StudentDataService from "@/services/StudentDataService";
+  import ItemDataService from "@/services/ItemDataService";
   
   export default {
     name: "AbmPayment",
@@ -71,12 +91,19 @@
           id: null,
           student_id: "",
           date: "",
-          number: ""
+          amount: ""
+
         },
+        itemstudents:[],
         students: [],
         submitted: false,
-        header: ''
-      };
+        header: '',
+        items:[],
+        estadoCheckbox: true 
+         };
+    },
+    created(){
+      this.$watch("payment.student_id", this.observedId);
     },
     methods: {
       getPayment(id) {
@@ -89,6 +116,22 @@
             console.log(e);
           });
       },
+      getItems() {
+      ItemDataService.getAll()
+        .then(response => {
+          console.log(response.data);
+          this.items = response.data;
+          var i = 0;
+          for(i = 0; i<this.items.length;i++){
+            this.items[i].seleccion = false;
+          }
+        })
+
+
+        .catch(e => {
+          console.log(e);
+        });
+    },
 
       retrieveStudents() {
       StudentDataService.getAll()
@@ -100,7 +143,16 @@
           console.log(e);
         });
     },
-
+    retrieveItems() {
+     ItemDataService.getAll()
+        .then(response => {
+          this.items = response.data;
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
   
       savePayment() {
         if (this.action == 'create') {
@@ -142,7 +194,19 @@
             console.log(e);
           });
       },
-  
+  observedId(newId , oldId){
+   if (newId !== oldId){
+    axios
+    .get("http://localhost/danzar_api/public/students/" + newId)
+    .then((response) => {
+      console.log(response.data);
+      this.itemstudents = response.data;
+    })
+    .catch(e => {
+            console.log(e);
+          });
+   }
+  },
       updatePayment() {
         PaymentDataService.update(this.payment.id, this.payment)
           .then(response => {
@@ -182,6 +246,7 @@
     mounted() {
       this.abm();
       this.retrieveStudents();
+      this.getItems()
     }
   };
   </script>
