@@ -32,16 +32,20 @@
                    
                       <h5>Items del estudiante:</h5>
                     <div v-for="(cadaItem, n) in itemstudents" :key="n">
-                      {{cadaItem.id+' '+cadaItem.name}}
-                      
-                    
-                   <li hidden>
-                    {{ payment.amount = payment.total + cadaItem.amount  }}
-                    {{   payment.total = cadaItem.amount  }}
-                   </li> 
-                     
-                    </div> 
+                      {{cadaItem.name+' '+cadaItem.amount}}
+      
 
+
+                      <li hidden>
+                      {{ totalAmount += cadaItem.amount }}
+                 
+                      {{payment.amount = totalAmount}}
+                      </li>
+
+                    </div> 
+                      <li hidden> 
+                        {{ totalAmount = 0 }}
+                      </li>
                   </div>
 
                   <div v-else> <h5>No se encontraron items..</h5>
@@ -115,7 +119,8 @@
         submitted: false,
         header: '',
         items:[],
-        estadoCheckbox: true 
+        estadoCheckbox: true,
+        totalAmount: 0
          };
     },
     
@@ -125,7 +130,7 @@
     },
     methods: {
       incrementar() {
-      this.payment.amount= this.payment.amount+this.payment.cadaItem.amount;
+      this.payment.amount= this.payment.amount+=this.payment.cadaItem.amount;
     },
       getPayment(id) {
         PaymentDataService.get(id)
