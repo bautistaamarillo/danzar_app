@@ -9,6 +9,10 @@ class StudentDataService {
     return http.get(`/students/${id}`);
   }
 
+  edit(id) {
+    return http.get(`/students/${id}/edit`)
+  }
+
   create(data) {
     return http.post("/students", data);
   }

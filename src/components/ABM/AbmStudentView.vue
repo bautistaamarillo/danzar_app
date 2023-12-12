@@ -47,11 +47,20 @@
             </div>
 
             <div v-for="item in items" :value="item.id" :key="item.id">
-                  {{ item.name }} <input type="checkbox"  v-model="item.seleccion">  
-                  <div v-if="item.seleccion === true"> 
-                  
-                  </div>
+              <li hidden> {{ created = false }} </li>
+              <div v-for="student_item in student_items" :value="student_item.id" :key="student_item.id">
+                <!-- {{ item.id }} -->
+                <!-- {{ student_item.id }} -->
+                <div v-if="item.id === student_item.id">
+                  {{ item.name }} <input type="checkbox" v-model="item.seleccion" checked>
+                  <li hidden> {{ created = true }} </li>
                 </div>
+              </div>
+              <div v-if="created === false">
+                {{ item.name }} <input type="checkbox" v-model="item.seleccion">
+                <li hidden> {{ created = true }} </li>
+              </div>
+            </div>
 
           </slot>
           </div>
@@ -96,13 +105,15 @@ export default {
         itemstudents: [{iditem:null}],
       },
       items: [],
+      student_items: [],
       submitted: false,
-      header: ''
+      header: '',
+      created: false
     };
   },
   methods: {
     getStudent(id) {
-      StudentDataService.get(id)
+      StudentDataService.edit(id)
         .then(response => {
           this.student = response.data[0];
           console.log(response.data);
@@ -116,19 +127,26 @@ export default {
         .then(response => {
           this.items = response.data;
           console.log(response.data);
-          var i = 0;
-          for(i = 0; i<this.items.length;i++){
-            this.items[i].seleccion = false;
-          }
+          // var i = 0;
+          // for(i = 0; i<this.items.length;i++){
+          //   this.items[i].seleccion = false;
+          // }
         })
-
-
         .catch(e => {
           console.log(e);
         });
     },
 
-    
+    getItemStudents(id) {
+      StudentDataService.get(id)
+        .then(response => {
+          this.student_items = response.data;
+          console.log(response.data, "aca");
+        })
+        .catch(e => {
+          console.log(e);
+        })
+    },
 
     saveStudent() {
       if (this.action == 'create') {
@@ -144,11 +162,7 @@ export default {
           studentitems: this.items.filter(E => E.seleccion)
         };
 
-
         console.log(JSON.stringify(data));
-        // console.log(JSON.stringify(this.items));
-        // console.log(JSON.stringify(this.items.filter(E => E.seleccion)));
-        
         
         StudentDataService.create(data)
           .then(response => {
@@ -199,7 +213,7 @@ export default {
 
     abm() {
       if (this.action != 'create') {
-        console.log(this.action, this.StudentId)
+        this.getItemStudents(this.StudentId)
         this.getStudent(this.StudentId)
       }
       switch (this.action) {
