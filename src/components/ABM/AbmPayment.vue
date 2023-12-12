@@ -23,19 +23,24 @@
                     {{ student.name + ' ' + student.last_name}} 
                   </option>       
                 </select>
+
+                
+                
                <div v-show="payment.student_id != ''">
-                <div v-for="(item, i) in items" :key="i">
-                  <li hidden>  {{n = 0}}</li>
-                  <div v-for="(cadaItem, n) in itemstudents" :key="n">
-                     <div v-if="item.name === cadaItem.name">
-                      {{ cadaItem.name }}<input type="checkbox" v-model="estadoCheckbox" value="cadaItem.id">
-                    </div>
+
+                  <div v-if="itemstudents[0] != null">
+                   
+                      <h5>Items del estudiante:</h5>
+                    <div v-for="(cadaItem, n) in itemstudents" :key="n">
+                      {{cadaItem.id+' '+cadaItem.name}}
                       
-                      <li hidden>  {{n = itemstudents}}</li>
-                    </div>
-                    {{ item.name }}<input type="checkbox" >
-                    </div>
-                    
+                    {{ payment.amount = payment.amount + cadaItem.amount}}
+                     
+                    </div> 
+
+                  </div>
+
+                  
                     </div>
                  
                     
@@ -91,10 +96,12 @@
           id: null,
           student_id: "",
           date: "",
-          amount: ""
+          amount: 0,
+          total:0
 
         },
-        itemstudents:[],
+        
+        itemstudents: [],
         students: [],
         submitted: false,
         header: '',
@@ -106,6 +113,9 @@
       this.$watch("payment.student_id", this.observedId);
     },
     methods: {
+      incrementar() {
+      this.payment.amount= this.payment.amount+this.payment.cadaItem.amount;
+    },
       getPayment(id) {
         PaymentDataService.get(id)
           .then(response => {
